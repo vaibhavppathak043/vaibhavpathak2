@@ -57,9 +57,9 @@ if uploaded_file is not None:
 
     # Display prediction
     if prediction == 0:
-        st.success("🐱 Prediction: CAT")
+        st.success("🐱 Prediction: DOG")
     else:
-        st.success("🐶 Prediction: DOG")
+        st.success("🐶 Prediction: CAT")
 
     # Display probabilities
     st.subheader("Prediction Confidence")
