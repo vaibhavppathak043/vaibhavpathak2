@@ -56,10 +56,10 @@ if uploaded_file is not None:
     probability = model.predict_proba([resized])[0]
 
     # Display prediction
-    if prediction == 0:
-        st.success("🐱 Prediction: DOG")
+    if prediction[0] == 0:
+        st.success("🐱 Prediction: CAT")
     else:
-        st.success("🐶 Prediction: CAT")
+        st.success("🐶 Prediction: DOG")
 
     # Display probabilities
     st.subheader("Prediction Confidence")
