@@ -15,7 +15,7 @@ st.set_page_config(
 # -------------------------
 # Load Model
 # -------------------------
-model = joblib.load("cat_dog_Predictor(1).pkl")
+model = joblib.load("cat_dog_Predictor.pkl")
 
 IMG_SIZE = 64
 
