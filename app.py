@@ -11,7 +11,7 @@ Dataset is downloaded from Kaggle. Link: https://www.kaggle.com/giripujar/hr-ana
 
 # Commented out IPython magic to ensure Python compatibility.
 import pandas as pd
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt
 # %matplotlib inline
 
 df = pd.read_csv("/content/sample_data/HR_comma_sep.csv")
