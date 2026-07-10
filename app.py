@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 # %matplotlib inline
 
 df = pd.read_csv("HR_comma_sep.csv")
-df.head()
+st.write(df.head())
 
 """<h2 style="color:purple">Data exploration and visualization</h2>"""
 
@@ -40,7 +40,8 @@ df.groupby('left').mean(numeric_only=True)
 **Impact of salary on employee retention**
 """
 
-pd.crosstab(df.salary,df.left).plot(kind='bar')
+fig = pd.crosstab(df.salary, df.left).plot(kind="bar").get_figure()
+st.pyplot(fig)
 
 """Above bar chart shows employees with high salaries are likely to not leave the company
 
@@ -80,7 +81,7 @@ df_with_dummies.drop('salary',axis='columns',inplace=True)
 df_with_dummies.head()
 
 X = df_with_dummies
-X.head()
+st.write(df.head())
 
 y = df.left
 
@@ -96,4 +97,5 @@ model.predict(X_test)
 
 """**Accuracy of the model**"""
 
-model.score(X_test,y_test)
+accuracy = model.score(X_test, y_test)
+st.write("Accuracy:", accuracy)
