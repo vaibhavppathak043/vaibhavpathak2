@@ -23,22 +23,21 @@ st.set_page_config(page_title="Employee Retention Predictor", layout="wide")
 st.title("Employee Retention Prediction")
 st.write("Predict whether an employee is likely to leave the company.")
 
-
-
 df = pd.read_csv("HR_comma_sep.csv")
 st.markdown(
     "<h2 style='color:purple'>Data Exploration and Visualization</h2>",
     unsafe_allow_html=True
 )
 left = df[df.left==1]
-left.shape
+st.write("Employees Left:", left.shape)
 
 retained = df[df.left==0]
-retained.shape
+st.write("Employees Retained:", retained.shape)
 
-"""**Average numbers for all columns**"""
+st.subheader("Average Numbers for All Columns")
 
-df.groupby('left').mean(numeric_only=True)
+st.subheader("Average Values")
+st.dataframe(df.groupby("left").mean(numeric_only=True))
 
 """From above table we can draw following conclusions,
 <ol>
@@ -58,7 +57,8 @@ st.pyplot(fig)
 **Department wise employee retention rate**
 """
 
-pd.crosstab(df.Department,df.left).plot(kind='bar')
+fig2 = pd.crosstab(df.Department, df.left).plot(kind="bar").get_figure()
+st.pyplot(fig2)
 
 st.write(
     "The chart suggests that department has only a small impact on employee retention, "
@@ -78,7 +78,7 @@ st.markdown(
 )
 
 subdf = df[['satisfaction_level','average_montly_hours','promotion_last_5years','salary']]
-subdf.head()
+st.dataframe(subdf.head())
 
 """**Tackle salary dummy variable**
 
@@ -89,12 +89,12 @@ salary_dummies = pd.get_dummies(subdf.salary, prefix="salary")
 
 df_with_dummies = pd.concat([subdf,salary_dummies],axis='columns')
 
-df_with_dummies.head()
+st.dataframe(df_with_dummies.head())
 
 """Now we need to remove salary column which is text data. It is already replaced by dummy variables so we can safely remove it"""
 
 df_with_dummies.drop('salary',axis='columns',inplace=True)
-df_with_dummies.head()
+st.dataframe(df_with_dummies.head())
 
 X = df_with_dummies
 st.write(df.head())
@@ -109,7 +109,8 @@ model = LogisticRegression()
 
 model.fit(X_train, y_train)
 
-model.predict(X_test)
+predictions = model.predict(X_test)
+st.write(predictions)
 
 """**Accuracy of the model**"""
 
