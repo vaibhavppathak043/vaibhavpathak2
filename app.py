@@ -11,10 +11,11 @@ Dataset is downloaded from Kaggle. Link: https://www.kaggle.com/giripujar/hr-ana
 
 # Commented out IPython magic to ensure Python compatibility.
 import pandas as pd
+import streamlit as st
 import matplotlib.pyplot as plt
 # %matplotlib inline
 
-df = pd.read_csv("/content/sample_data/HR_comma_sep.csv")
+df = pd.read_csv("HR_comma_sep.csv")
 df.head()
 
 """<h2 style="color:purple">Data exploration and visualization</h2>"""
