@@ -9,10 +9,6 @@ Original file is located at
 Dataset is downloaded from Kaggle. Link: https://www.kaggle.com/giripujar/hr-analytics
 """
 
-st.set_page_config(page_title="Employee Retention Predictor", layout="wide")
-
-st.title("Employee Retention Prediction")
-st.write("Predict whether an employee is likely to leave the company.")
 
 # Commented out IPython magic to ensure Python compatibility.
 import streamlit as st
@@ -21,6 +17,13 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 # %matplotlib inline
+
+st.set_page_config(page_title="Employee Retention Predictor", layout="wide")
+
+st.title("Employee Retention Prediction")
+st.write("Predict whether an employee is likely to leave the company.")
+
+
 
 df = pd.read_csv("HR_comma_sep.csv")
 st.markdown(
