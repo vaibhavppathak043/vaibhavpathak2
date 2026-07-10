@@ -29,33 +29,38 @@ st.markdown(
     unsafe_allow_html=True
 )
 left = df[df.left==1]
-st.write("Employees Left:", left.shape)
-
 retained = df[df.left==0]
-st.write("Employees Retained:", retained.shape)
+col1, col2 = st.columns(2)
+
+with col1:
+    st.metric("Employees Left", left.shape[0])
+
+with col2:
+    st.metric("Employees Retained", retained.shape[0])
 
 st.subheader("Average Numbers for All Columns")
 
 st.subheader("Average Values")
 st.dataframe(df.groupby("left").mean(numeric_only=True))
 
-"""From above table we can draw following conclusions,
-<ol>
-    <li>**Satisfaction Level**: Satisfaction level seems to be relatively low (0.44) in employees leaving the firm vs the retained ones (0.66)</li>
-    <li>**Average Monthly Hours**: Average monthly hours are higher in employees leaving the firm (199 vs 207)</li>
-    <li>**Promotion Last 5 Years**: Employees who are given promotion are likely to be retained at firm </li>
-</ol>
+st.markdown("""
+### Conclusions
 
-**Impact of salary on employee retention**
-"""
+- **Satisfaction Level:** Employees with lower satisfaction are more likely to leave.
+- **Average Monthly Hours:** Employees working more hours are more likely to leave.
+- **Promotion in Last 5 Years:** Employees who receive promotions are more likely to stay.
+""")
+
+st.subheader("Impact of Salary on Employee Retention")
 
 fig = pd.crosstab(df.salary, df.left).plot(kind="bar").get_figure()
 st.pyplot(fig)
 
-"""Above bar chart shows employees with high salaries are likely to not leave the company
+st.write(
+    "Employees with higher salaries are generally less likely to leave the company."
+)
 
-**Department wise employee retention rate**
-"""
+st.subheader("Department-wise Employee Retention Rate")
 
 fig2 = pd.crosstab(df.Department, df.left).plot(kind="bar").get_figure()
 st.pyplot(fig2)
@@ -80,10 +85,13 @@ st.markdown(
 subdf = df[['satisfaction_level','average_montly_hours','promotion_last_5years','salary']]
 st.dataframe(subdf.head())
 
-"""**Tackle salary dummy variable**
+st.subheader("One-Hot Encoding of Salary")
 
-Salary has all text data. It needs to be converted to numbers and we will use dummy variable for that. Check my one hot encoding tutorial to understand purpose behind dummy variables.
-"""
+st.write(
+    "Salary is a categorical feature, so it is converted into dummy variables "
+    "before training the model."
+)
+
 
 salary_dummies = pd.get_dummies(subdf.salary, prefix="salary")
 
@@ -91,8 +99,9 @@ df_with_dummies = pd.concat([subdf,salary_dummies],axis='columns')
 
 st.dataframe(df_with_dummies.head())
 
-"""Now we need to remove salary column which is text data. It is already replaced by dummy variables so we can safely remove it"""
-
+st.write(
+    "The original salary column is removed after creating dummy variables."
+)
 df_with_dummies.drop('salary',axis='columns',inplace=True)
 st.dataframe(df_with_dummies.head())
 
@@ -101,10 +110,9 @@ st.write(df.head())
 
 y = df.left
 
-from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X,y,train_size=0.3)
 
-from sklearn.linear_model import LogisticRegression
+
 model = LogisticRegression()
 
 model.fit(X_train, y_train)
@@ -112,7 +120,6 @@ model.fit(X_train, y_train)
 predictions = model.predict(X_test)
 st.write(predictions)
 
-"""**Accuracy of the model**"""
-
+st.subheader("Model Accuracy")
 accuracy = model.score(X_test, y_test)
-st.write("Accuracy:", accuracy)
+st.metric("Model Accuracy", f"{accuracy*100:.2f}%")
