@@ -15,9 +15,11 @@ st.title("Employee Retention Prediction")
 st.write("Predict whether an employee is likely to leave the company.")
 
 # Commented out IPython magic to ensure Python compatibility.
-import pandas as pd
 import streamlit as st
+import pandas as pd
 import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
 # %matplotlib inline
 
 df = pd.read_csv("HR_comma_sep.csv")
