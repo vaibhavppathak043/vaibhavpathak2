@@ -9,6 +9,11 @@ Original file is located at
 Dataset is downloaded from Kaggle. Link: https://www.kaggle.com/giripujar/hr-analytics
 """
 
+st.set_page_config(page_title="Employee Retention Predictor", layout="wide")
+
+st.title("Employee Retention Prediction")
+st.write("Predict whether an employee is likely to leave the company.")
+
 # Commented out IPython magic to ensure Python compatibility.
 import pandas as pd
 import streamlit as st
@@ -16,10 +21,10 @@ import matplotlib.pyplot as plt
 # %matplotlib inline
 
 df = pd.read_csv("HR_comma_sep.csv")
-st.write(df.head())
-
-"""<h2 style="color:purple">Data exploration and visualization</h2>"""
-
+st.markdown(
+    "<h2 style='color:purple'>Data Exploration and Visualization</h2>",
+    unsafe_allow_html=True
+)
 left = df[df.left==1]
 left.shape
 
@@ -50,16 +55,22 @@ st.pyplot(fig)
 
 pd.crosstab(df.Department,df.left).plot(kind='bar')
 
-"""From above chart there seem to be some impact of department on employee retention but it is not major hence we will ignore department in our analysis
-
-<h3 style="color:purple">From the data analysis so far we can conclude that we will use following variables as independant variables in our model</h3>
-<ol>
-    <li>**Satisfaction Level**</li>
-    <li>**Average Monthly Hours**</li>
-    <li>**Promotion Last 5 Years**</li>
-    <li>**Salary**</li>
-</ol>
-"""
+st.write(
+    "The chart suggests that department has only a small impact on employee retention, "
+    "so it is not included in the prediction model."
+)
+st.markdown(
+    """
+    <h3 style='color:purple'>Selected Features</h3>
+    <ol>
+      <li>Satisfaction Level</li>
+      <li>Average Monthly Hours</li>
+      <li>Promotion Last 5 Years</li>
+      <li>Salary</li>
+    </ol>
+    """,
+    unsafe_allow_html=True
+)
 
 subdf = df[['satisfaction_level','average_montly_hours','promotion_last_5years','salary']]
 subdf.head()
